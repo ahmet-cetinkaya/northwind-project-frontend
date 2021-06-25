@@ -1,15 +1,26 @@
-import React, { useState, useEffect } from "react";
+import { Button, Icon, Menu, Table } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
-import { Icon, Menu, Table } from "semantic-ui-react";
 import ProductService from "../../services/productService";
+import { addToCart } from "../../store/actions/cartActions";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let productService = new ProductService();
     productService.getProduct().then((result) => setProducts(result.data.data));
   }, []);
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+    toast.success(`${product.productName} has added to cart.`);
+  };
 
   return (
     <Table celled>
@@ -20,6 +31,7 @@ export default function ProductList() {
           <Table.HeaderCell>units In Stock</Table.HeaderCell>
           <Table.HeaderCell>Description</Table.HeaderCell>
           <Table.HeaderCell>Category</Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
@@ -35,6 +47,11 @@ export default function ProductList() {
             <Table.Cell>{product.unitsInStock}</Table.Cell>
             <Table.Cell>{product.productName}</Table.Cell>
             <Table.Cell>{product.category.categoryName}</Table.Cell>
+            <Table.Cell>
+              <Button onClick={() => handleAddToCart(product)}>
+                Add to cart
+              </Button>
+            </Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

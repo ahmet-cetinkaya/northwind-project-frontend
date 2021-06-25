@@ -1,13 +1,16 @@
+import { Container, Menu } from "semantic-ui-react";
+import { NavLink, useHistory } from "react-router-dom";
 import React, { useState } from "react";
+
 import CartSummary from "../CartSummary/CartSummary";
-import { Menu, Container } from "semantic-ui-react";
 import SignedIn from "../SignedIn/SignedIn";
 import SignedOut from "../SignedOut/SignedOut";
-import { NavLink, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false),
-    history = useHistory();
+    history = useHistory(),
+    { cartItems } = useSelector((state) => state.cart);
 
   function handleSignOut() {
     setIsAuthenticated(false);
@@ -28,7 +31,7 @@ export default function Navbar() {
           </Menu>
 
           <Menu.Menu position='right'>
-            <CartSummary />
+            {cartItems.length > 0 && <CartSummary />}
             {isAuthenticated ? (
               <SignedIn signOut={handleSignOut} />
             ) : (

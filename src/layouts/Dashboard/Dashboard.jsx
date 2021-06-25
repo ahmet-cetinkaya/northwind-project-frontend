@@ -1,15 +1,16 @@
+import CardDetail from "../../pages/CardDetail/CardDetail";
+import Categories from "../Categories/Categories";
+import { Grid } from "semantic-ui-react";
+import ProductDetail from "../../pages/ProductDetail/ProductDetail";
+import ProductList from "../../pages/ProductList/ProductList";
 import React from "react";
 import { Route } from "react-router-dom";
-import { Grid } from "semantic-ui-react";
-
-import Categories from "../Categories/Categories";
-import ProductList from "../../pages/ProductList/ProductList";
-import ProductDetail from "../../pages/ProductDetail/ProductDetail";
-import CardDetail from "../../pages/CardDetail/CardDetail";
+import { ToastContainer } from "react-toastify";
 
 export default function Dashboard() {
   return (
     <div>
+      <ToastContainer position='bottom-right' />
       <Grid>
         <Grid.Row>
           <Grid.Column width='4'>
